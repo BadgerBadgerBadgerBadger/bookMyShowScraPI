@@ -7,6 +7,9 @@
     "NODE_PATH": {
       "value": "$NODE_PATH:./lib"
     },
+    "NPM_CONFIG_PRODUCTION": {
+      "value": "false"
+    },
     "NODE_ENV": {
       "value": "production"
     },
