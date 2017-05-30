@@ -1,0 +1,28 @@
+{
+  "name": "BookMyShowScraPI",
+  "description": "A little scraping API for BookMyShow.",
+  "repository": "https://github.com/Nwinworks/taptapboom.audio",
+  "logo": "https://node-js-sample.herokuapp.com/node.png",
+  "env": {
+    "NODE_PATH": {
+      "value": "$NODE_PATH:./"
+    },
+    "NODE_ENV": {
+      "value": "production"
+    },
+    "APP_BASE_URI": {
+      "description": "The baseurl of the app. Replace <appname> with your app's name.",
+      "value": "https://<appname>.herokuapp.com"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs#v98"
+    }
+  ]
+}
