@@ -5,7 +5,7 @@
   "logo": "https://node-js-sample.herokuapp.com/node.png",
   "env": {
     "NODE_PATH": {
-      "value": "$NODE_PATH:./"
+      "value": "$NODE_PATH:./lib"
     },
     "NODE_ENV": {
       "value": "production"
