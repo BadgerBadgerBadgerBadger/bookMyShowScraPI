@@ -3,22 +3,42 @@
 import * as express from 'express'
 const router = express.Router({mergeParams: true})
 
-import { MovieAvailability } from 'bookmyshow/moviesInCity/MoviesInCity'
-import { getComingSoon, getNowShowingInCity } from 'bookmyshow/moviesInCity'
+import { getShowTimings, getComingSoon, getNowShowingInCity } from 'bookmyshow'
 
-router.get('/movie/:city_id/:movie_availabilty', (req, res) => {
+/**
+ * Get movies currently playing in the target city.
+ */
+router.get(`/movie/:city_id/now_showing`, (req, res) => {
   (async function () {
 
     const cityId = req.params.city_id
-    const movieAvailability: MovieAvailability = req.params.movie_availabilty
+    return getNowShowingInCity(cityId)
+  })()
+    .then(result => res.json(result))
+})
 
-    if (movieAvailability === MovieAvailability.now_showing) {
-      return getNowShowingInCity(cityId)
-    }
+/**
+ * Get movies coming soon to the target city.
+ */
+router.get(`/movie/:city_id/coming_soon`, (req, res) => {
+  (async function () {
 
-    if (movieAvailability === MovieAvailability.coming_soon) {
-      return getComingSoon(cityId)
-    }
+    const cityId = req.params.city_id
+    return getComingSoon(cityId)
+  })()
+    .then(result => res.json(result))
+})
+
+/**
+ * Get the show timings for a given movie in a given city.
+ */
+router.get(`/movie/:city_id/:movie_id`, (req, res) => {
+  (async function () {
+
+    const cityId = req.params.city_id
+    const movieId = req.params.movie_id
+
+    return getShowTimings(cityId, movieId)
   })()
     .then(result => res.json(result))
 })

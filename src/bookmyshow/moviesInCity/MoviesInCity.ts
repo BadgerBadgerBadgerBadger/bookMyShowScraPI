@@ -39,19 +39,35 @@ export default class MoviesInCity {
 
     const self = this
 
-    const [nowShowingPageResponse, comingSoonPageResponse] = await Promise.all([
-      request(`https://in.bookmyshow.com/${self.cityId}/movies`),
-      request(`https://in.bookmyshow.com/${self.cityId}/movies/comingsoon`)
-    ])
+    await Promise.all([ self.fetchNowShowing(), self.fetchComingSoon() ])
+
+    return self
+  }
+
+  async fetchComingSoon() {
+
+    const self = this
+
+    const comingSoonPageResponse = await request(`https://in.bookmyshow.com/${self.cityId}/movies/comingsoon`)
+
+    self.comingSoonStatic = cheerio.load(comingSoonPageResponse)
+    self.comingSoonMovieCards = self.comingSoonStatic(`div.__col-now-showing`)
+      .find(`.movie-card-container`)
+
+    return self
+  }
+
+  async fetchNowShowing() {
+
+    const self = this
+
+    const nowShowingPageResponse = await request(`https://in.bookmyshow.com/${self.cityId}/movies`)
 
     self.nowShowingStatic = cheerio.load(nowShowingPageResponse)
-    self.comingSoonStatic = cheerio.load(comingSoonPageResponse)
-
     self.nowShowingMovieCards = self.nowShowingStatic(`div.__col-now-showing`)
       .find(`.movie-card-container`)
 
-    self.comingSoonMovieCards = self.comingSoonStatic(`div.__col-now-showing`)
-      .find(`.movie-card-container`)
+    return self
   }
 
   _getSectionDetails(sectionStatic: CheerioStatic, movieCards: Cheerio): MovieDetail[] {
