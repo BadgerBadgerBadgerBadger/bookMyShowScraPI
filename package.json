@@ -8,7 +8,7 @@
     "start": "node_modules/.bin/gulp && node lib/index.js"
   },
   "engines": {
-    "node": "7.6.0"
+    "node": "7.10.1"
   },
   "author": "",
   "license": "ISC",
